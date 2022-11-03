@@ -30,7 +30,7 @@ class GalleryImages extends StatelessWidget {
             borderRadius: BorderRadius.circular(AppRadius.large3)),
         child: CachedImage(
           image: galleryDataModel!.galleryData!.images[index],
-          circularColor: AppColors.firstGalleryColor,
+          circularColor: Colors.white,
         ));
   }
 }

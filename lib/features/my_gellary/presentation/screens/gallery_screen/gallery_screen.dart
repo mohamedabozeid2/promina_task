@@ -32,30 +32,38 @@ class _GalleryScreenState extends State<GalleryScreen> {
     return BlocProvider(
       create: (BuildContext context) => GalleryCubit()..getGallery(),
       child: BlocConsumer<GalleryCubit, GalleryStates>(
-        listener: (context, state){},
-        builder: (context, state){
+        listener: (context, state) {},
+        builder: (context, state) {
           return Scaffold(
               extendBodyBehindAppBar: true,
               body: Container(
                 color: AppColors.firstGalleryColor,
                 height: Helper.getScreenHeight(context: context),
                 width: Helper.getScreenWidth(context: context),
-                child: state is GalleryGetImagesLoadingState ? Center(child: AdaptiveIndicator(os: Components.getOS())) : Column(
-                  children: [
-                    Container(
-                      decoration: BoxDecoration(color: AppColors.firstGalleryColor),
-                      height: Helper.getScreenHeight(context: context) * 0.16,
-                      child: Row(
-                        crossAxisAlignment: CrossAxisAlignment.end,
+                child: state is GalleryGetImagesLoadingState
+                    ? Center(
+                        child: AdaptiveIndicator(
+                        os: Components.getOS(),
+                        color: Colors.white,
+                      ))
+                    : Column(
                         children: [
-                          WelcomeWidget(),
-                          UserImageWidget(),
+                          Container(
+                            decoration: BoxDecoration(
+                                color: AppColors.firstGalleryColor),
+                            height:
+                                Helper.getScreenHeight(context: context) * 0.16,
+                            child: Row(
+                              crossAxisAlignment: CrossAxisAlignment.end,
+                              children: [
+                                WelcomeWidget(),
+                                UserImageWidget(),
+                              ],
+                            ),
+                          ),
+                          GalleryBody()
                         ],
                       ),
-                    ),
-                    GalleryBody()
-                  ],
-                ),
               ));
         },
       ),

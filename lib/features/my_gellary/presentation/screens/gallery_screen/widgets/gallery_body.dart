@@ -28,15 +28,20 @@ class GalleryBody extends StatelessWidget {
                 colors: [
                   AppColors.thirdGalleryColor,
                   AppColors.secondGalleryColor,
+                  AppColors.thirdGalleryColor
+                ],
+                stops: [
+                  0.1,0.4,0.9
                 ],
                 begin: Alignment.topCenter,
-                end: Alignment.bottomCenter,
+                end: Alignment.bottomRight,
               ),
               borderRadius: const BorderRadius.only(
                 topRight: Radius.circular(AppRadius.circular),
               ),
             ),
             child: SingleChildScrollView(
+              physics: const BouncingScrollPhysics(),
               child: Column(
                 children: [
                   GalleryActionButtons(galleryFun: () {

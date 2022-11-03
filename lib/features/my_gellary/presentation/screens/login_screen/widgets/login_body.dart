@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:promina_task/core/utils/components.dart';
+import 'package:promina_task/core/widgets/adaptive_indicator.dart';
 import 'package:promina_task/features/my_gellary/presentation/screens/login_screen/widgets/sizedBox.dart';
 import 'package:promina_task/logic/login_cubit/login_cubit.dart';
 import 'package:promina_task/logic/login_cubit/login_states.dart';
@@ -100,7 +101,7 @@ class _LoginBodyState extends State<LoginBody> {
                             borderRadius: AppRadius.circular,
                           ),
                           const DefaultSizedBox(),
-                          DefaultButton(
+                          state is LoginLoadingState ? Center(child: AdaptiveIndicator(os: Components.getOS(),color: AppColors.secondGalleryColor,)) : DefaultButton(
                               fun: () {
                                 if (userNameController.text.isNotEmpty &&
                                     passwordController.text.isNotEmpty) {

@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
@@ -15,58 +17,61 @@ class ImagePickerDialog extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        GestureDetector(
-          onTap: galleryFun,
-          child: Container(
-            decoration: BoxDecoration(
-                color: AppColors.secondGalleryColor,
-                borderRadius: BorderRadius.circular(AppRadius.large3)),
-            padding:
-                EdgeInsets.all(Helper.getScreenHeight(context: context) * 0.02),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                Image.asset(ImageAssets.galleryLogo),
-                Text(
-                  AppStrings.gallery,
-                  style: Theme.of(context)
-                      .textTheme
-                      .bodyText1!
-                      .copyWith(fontSize: 26),
-                ),
-              ],
+    return BackdropFilter(
+      filter: ImageFilter.blur(sigmaX: 5.0, sigmaY: 5.0),
+      child: Column(
+        children: [
+          GestureDetector(
+            onTap: galleryFun,
+            child: Container(
+              decoration: BoxDecoration(
+                  color: AppColors.secondGalleryColor,
+                  borderRadius: BorderRadius.circular(AppRadius.large3)),
+              padding:
+                  EdgeInsets.all(Helper.getScreenHeight(context: context) * 0.02),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  Image.asset(ImageAssets.galleryLogo),
+                  Text(
+                    AppStrings.gallery,
+                    style: Theme.of(context)
+                        .textTheme
+                        .bodyText1!
+                        .copyWith(fontSize: 26),
+                  ),
+                ],
+              ),
             ),
           ),
-        ),
-        SizedBox(
-          height: Helper.getScreenHeight(context: context) * 0.04,
-        ),
-        GestureDetector(
-          onTap: cameraFun,
-          child: Container(
-            decoration: BoxDecoration(
-                color: AppColors.thirdGalleryColor,
-                borderRadius: BorderRadius.circular(AppRadius.large3)),
-            padding: EdgeInsets.symmetric(
-                horizontal: Helper.getScreenWidth(context: context) * 0.05),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                Image.asset(ImageAssets.cameraLogo),
-                Text(
-                  AppStrings.camera,
-                  style: Theme.of(context)
-                      .textTheme
-                      .bodyText1!
-                      .copyWith(fontSize: 26),
-                ),
-              ],
+          SizedBox(
+            height: Helper.getScreenHeight(context: context) * 0.04,
+          ),
+          GestureDetector(
+            onTap: cameraFun,
+            child: Container(
+              decoration: BoxDecoration(
+                  color: AppColors.thirdGalleryColor,
+                  borderRadius: BorderRadius.circular(AppRadius.large3)),
+              padding: EdgeInsets.symmetric(
+                  horizontal: Helper.getScreenWidth(context: context) * 0.05),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  Image.asset(ImageAssets.cameraLogo),
+                  Text(
+                    AppStrings.camera,
+                    style: Theme.of(context)
+                        .textTheme
+                        .bodyText1!
+                        .copyWith(fontSize: 26),
+                  ),
+                ],
+              ),
             ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 }

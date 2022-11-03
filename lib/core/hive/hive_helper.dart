@@ -1,10 +1,13 @@
+import 'package:flutter/cupertino.dart';
 import 'package:hive_flutter/adapters.dart';
+import 'package:promina_task/core/utils/components.dart';
 import 'package:promina_task/features/my_gellary/data/data_models/user_data_model.dart';
 import 'package:promina_task/features/my_gellary/data/data_models/user_login_model.dart';
 import 'package:hive_flutter/hive_flutter.dart';
+import 'package:promina_task/features/my_gellary/presentation/screens/login_screen/login_screen.dart';
 import 'hive_keys.dart';
 
-class HiveHelper{
+class HiveHelper {
   static Box<UserLoginModel>? userModel;
   static Box<bool>? login;
 
@@ -15,11 +18,9 @@ class HiveHelper{
     Hive.registerAdapter(UserLoginModelAdapter());
     Hive.registerAdapter(UserDataModelAdapter());
 
-
     //// Open Boxes
     userModel = await Hive.openBox<UserLoginModel>(HiveKeys.userModel);
     login = await Hive.openBox<bool>(HiveKeys.login);
-
   }
 
   static Future<void> putUserModel({
@@ -37,7 +38,6 @@ class HiveHelper{
     return box.get(key);
   }
 
-
   static Future<void> putLoginValue({
     required Box box,
     required String key,
@@ -53,4 +53,8 @@ class HiveHelper{
     return box.get(key, defaultValue: false);
   }
 
+  static void signOut() {
+    userModel!.delete(HiveKeys.userModel);
+    putLoginValue(box: login!, key: HiveKeys.login, login: false);
+  }
 }

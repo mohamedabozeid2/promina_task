@@ -1,10 +1,14 @@
 import 'dart:io';
 
 import 'package:dio/dio.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:promina_task/core/api/dio_helper.dart';
 import 'package:promina_task/core/api/end_points.dart';
+import 'package:promina_task/core/hive/hive_helper.dart';
+import 'package:promina_task/core/utils/components.dart';
+import 'package:promina_task/features/my_gellary/presentation/screens/login_screen/login_screen.dart';
 import 'package:promina_task/logic/gallery_cubit/gallery_states.dart';
 
 import '../../core/utils/constants.dart';
@@ -60,5 +64,11 @@ class GalleryCubit extends Cubit<GalleryStates> {
       print(error.toString());
       emit(GalleryGetImagesErrorState());
     });
+  }
+
+
+  void signOut({required BuildContext context}){
+    HiveHelper.signOut();
+    Components.navigateAndFinish(context: context, widget: LoginScreen());
   }
 }
