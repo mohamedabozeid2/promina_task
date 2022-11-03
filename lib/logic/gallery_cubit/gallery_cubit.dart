@@ -2,15 +2,18 @@ import 'dart:io';
 
 import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:promina_task/core/api/dio_helper.dart';
 import 'package:promina_task/core/api/end_points.dart';
 import 'package:promina_task/core/hive/hive_helper.dart';
+import 'package:promina_task/core/netowrk/network.dart';
 import 'package:promina_task/core/utils/components.dart';
 import 'package:promina_task/features/my_gellary/presentation/screens/login_screen/login_screen.dart';
 import 'package:promina_task/logic/gallery_cubit/gallery_states.dart';
 
+import '../../core/utils/Colors.dart';
 import '../../core/utils/constants.dart';
 import '../../features/my_gellary/data/data_models/gallery_data_model.dart';
 
@@ -28,7 +31,7 @@ class GalleryCubit extends Cubit<GalleryStates> {
       image = File(pickedFile.path);
       uploadImage(file: image!);
     } else {
-      print("No image selected");
+      debugPrint("No image selected");
       emit(GalleryUploadImageErrorState());
     }
   }
@@ -39,35 +42,58 @@ class GalleryCubit extends Cubit<GalleryStates> {
     FormData formData = FormData.fromMap({
       "img": await MultipartFile.fromFile(file.path, filename: fileName),
     });
-    DioHelper.postData(
-            url: EndPoints.uploadImage,
-            data: formData,
-            token: userLoginModel!.token)
-        .then((value) {
+    CheckConnection.checkConnection().then((value) {
+      if (value) {
+        DioHelper.postData(
+                url: EndPoints.uploadImage,
+                data: formData,
+                token: userLoginModel!.token)
+            .then((value) {
           getGallery();
-      // emit(GalleryUploadImageSuccessState());
-    }).catchError((error) {
-      print('Error in upload image ${error.toString()}');
-      emit(GalleryUploadImageErrorState());
+          // emit(GalleryUploadImageSuccessState());
+        }).catchError((error) {
+          debugPrint('Error in upload image ${error.toString()}');
+          emit(GalleryUploadImageErrorState());
+        });
+      } else {
+        Components.showSnackBar(
+          title: 'Gallery',
+          message: 'No Internet Connection',
+          backgroundColor: AppColors.secondLoginColor.withOpacity(0.7),
+          textColor: Colors.white,
+        );
+        emit(GalleryUploadImageErrorState());
+      }
     });
   }
 
   void getGallery({bool fromUpload = false}) {
-    if(!fromUpload){
-      emit(GalleryGetImagesLoadingState());
-    }
-    DioHelper.getData(url: EndPoints.gallery, token: userLoginModel!.token)
-        .then((value) {
-      galleryDataModel = GalleryDataModel.fromJson(value.data);
-      emit(GalleryGetImagesSuccessState());
-    }).catchError((error) {
-      print(error.toString());
-      emit(GalleryGetImagesErrorState());
+    CheckConnection.checkConnection().then((value) {
+      if (value) {
+        if (!fromUpload) {
+          emit(GalleryGetImagesLoadingState());
+        }
+        DioHelper.getData(url: EndPoints.gallery, token: userLoginModel!.token)
+            .then((value) {
+          galleryDataModel = GalleryDataModel.fromJson(value.data);
+          emit(GalleryGetImagesSuccessState());
+        }).catchError((error) {
+          debugPrint(error.toString());
+          emit(GalleryGetImagesErrorState());
+        });
+      } else {
+        Components.showSnackBar(
+          title: 'Gallery',
+          message: 'No Internet Connection',
+          backgroundColor: AppColors.secondLoginColor.withOpacity(0.7),
+          textColor: Colors.white,
+        );
+        emit(GalleryGetImagesErrorState());
+      }
     });
   }
 
-
-  void signOut({required BuildContext context}){
+  void signOut({required BuildContext context}) {
     HiveHelper.signOut();
     Components.navigateAndFinish(context: context, widget: LoginScreen());
   }

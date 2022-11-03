@@ -10,6 +10,6 @@ class AppColors {
   static Color secondGalleryColor = const Color(0xffac99cf);
   static Color thirdGalleryColor = const Color(0xffece3fa);
 
-  static Color logoutButton = const Color(0xffC83B3B);
+  static Color logoutButton = const Color(0xffF54747);
   static Color uploadButton = const Color(0xffFFA005);
 }

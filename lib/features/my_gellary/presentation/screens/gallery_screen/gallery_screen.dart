@@ -40,7 +40,7 @@ class _GalleryScreenState extends State<GalleryScreen> {
                 color: AppColors.firstGalleryColor,
                 height: Helper.getScreenHeight(context: context),
                 width: Helper.getScreenWidth(context: context),
-                child: state is GalleryGetImagesLoadingState
+                child: state is GalleryGetImagesLoadingState || state is GalleryUploadImageLoadingState
                     ? Center(
                         child: AdaptiveIndicator(
                         os: Components.getOS(),

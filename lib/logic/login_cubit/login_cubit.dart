@@ -39,6 +39,8 @@ class LoginCubit extends Cubit<LoginStates> {
             emit(LoginSuccessState());
           }).catchError((error) {
             debugPrint('Error in hive ${error.toString()}');
+            emit(LoginErrorState(error: error.toString()));
+
           });
         }).catchError((error) {
           Components.showSnackBar(
@@ -56,6 +58,8 @@ class LoginCubit extends Cubit<LoginStates> {
           backgroundColor: AppColors.secondLoginColor.withOpacity(0.7),
           textColor: Colors.white,
         );
+        emit(LoginErrorState());
+
       }
     });
   }
