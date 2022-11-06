@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:promina_task/core/hive/hive_helper.dart';
 import 'package:promina_task/core/hive/hive_keys.dart';
 import 'package:promina_task/core/utils/Colors.dart';
@@ -34,13 +35,18 @@ class _GalleryScreenState extends State<GalleryScreen> {
       child: BlocConsumer<GalleryCubit, GalleryStates>(
         listener: (context, state) {},
         builder: (context, state) {
+          ScreenUtil.init(
+            context,
+            designSize: const Size(360, 690),
+          );
           return Scaffold(
               extendBodyBehindAppBar: true,
               body: Container(
                 color: AppColors.firstGalleryColor,
                 height: Helper.getScreenHeight(context: context),
                 width: Helper.getScreenWidth(context: context),
-                child: state is GalleryGetImagesLoadingState || state is GalleryUploadImageLoadingState
+                child: state is GalleryGetImagesLoadingState ||
+                        state is GalleryUploadImageLoadingState
                     ? Center(
                         child: AdaptiveIndicator(
                         os: Components.getOS(),
@@ -61,7 +67,7 @@ class _GalleryScreenState extends State<GalleryScreen> {
                               ],
                             ),
                           ),
-                          GalleryBody()
+                          GalleryBody(),
                         ],
                       ),
               ));

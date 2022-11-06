@@ -1,6 +1,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:promina_task/core/utils/Colors.dart';
 import 'package:promina_task/core/utils/components.dart';
 import 'package:promina_task/core/utils/constants.dart';
@@ -30,6 +31,7 @@ class _LoginScreenState extends State<LoginScreen> {
           }
         },
         builder:(context, state){
+          ScreenUtil.init(context, designSize: const Size(360, 690));
           return Scaffold(
             extendBodyBehindAppBar: true,
             body: Container(

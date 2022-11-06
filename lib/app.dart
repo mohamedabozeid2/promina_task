@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:promina_task/config/themes/light_theme.dart';
-import 'package:promina_task/features/my_gellary/presentation/screens/gallery_screen/gallery_screen.dart';
-
-import 'features/my_gellary/presentation/screens/login_screen/login_screen.dart';
+import 'package:promina_task/logic/gallery_cubit/gallery_cubit.dart';
 
 class GalleryApp extends StatelessWidget {
   Widget startScreen;
@@ -14,7 +13,7 @@ class GalleryApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ScreenUtilInit(
-      designSize: const Size(360, 690),
+      designSize: const Size(427, 1385),
       minTextAdapt: true,
       splitScreenMode: true,
       builder: (context, child){
@@ -23,9 +22,11 @@ class GalleryApp extends StatelessWidget {
           title: 'Gallery',
           theme: lightTheme,
           themeMode: ThemeMode.light,
-          home: startScreen,
+
+          home: child,
         );
       },
+      child: startScreen,
     );
   }
 }

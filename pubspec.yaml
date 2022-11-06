@@ -41,12 +41,13 @@ dependencies:
   dio: ^4.0.4
   shared_preferences: ^2.0.12
   get: ^4.6.5
+  auto_size_text: ^3.0.0
   hive: ^2.2.3
   image_picker: ^0.8.5
   hive_flutter: ^1.1.0
   internet_connection_checker: ^0.0.1+4
   get_it: ^7.2.0
-  flutter_screenutil: ^5.5.4
+  flutter_screenutil: ^5.6.0
   cached_network_image: ^3.2.1
 
 dev_dependencies:

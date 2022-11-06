@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:promina_task/core/netowrk/network.dart';
 import 'package:promina_task/core/utils/components.dart';
 import 'package:promina_task/core/widgets/adaptive_indicator.dart';
 import 'package:promina_task/features/my_gellary/presentation/screens/login_screen/widgets/sizedBox.dart';
@@ -128,7 +129,12 @@ class _LoginBodyState extends State<LoginBody> {
                               fontSize: AppFontSize.s18,
                               textColor: Colors.white,
                               backgroundColor: AppColors.buttonColor,
-                              borderRadius: AppRadius.medium2)
+                              borderRadius: AppRadius.medium2),
+                          DefaultButton(fun: (){
+                            CheckConnection.checkConnection().then((value){
+                              print(value);
+                            });
+                          }, text: 'Test network', height: 100, fontSize: 18, borderRadius: 0),
                         ],
                       ),
                     ),

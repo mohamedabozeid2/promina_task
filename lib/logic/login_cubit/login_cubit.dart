@@ -26,6 +26,7 @@ class LoginCubit extends Cubit<LoginStates> {
     emit(LoginLoadingState());
     CheckConnection.checkConnection().then((value) {
       if (value) {
+
         DioHelper.postData(
             url: EndPoints.login,
             data: {'email': email, 'password': password}).then((value) {

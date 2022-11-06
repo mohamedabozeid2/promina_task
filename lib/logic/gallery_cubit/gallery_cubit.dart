@@ -67,21 +67,23 @@ class GalleryCubit extends Cubit<GalleryStates> {
     });
   }
 
-  void getGallery({bool fromUpload = false}) {
-    CheckConnection.checkConnection().then((value) {
+  Future getGallery({bool fromUpload = false}) async{
+    if (!fromUpload) {
+      emit(GalleryGetImagesLoadingState());
+    }
+    CheckConnection.checkConnection().then((value) async{
       if (value) {
-        if (!fromUpload) {
-          emit(GalleryGetImagesLoadingState());
-        }
-        DioHelper.getData(url: EndPoints.gallery, token: userLoginModel!.token)
+         await DioHelper.getData(url: EndPoints.gallery, token: userLoginModel!.token)
             .then((value) {
-          galleryDataModel = GalleryDataModel.fromJson(value.data);
-          emit(GalleryGetImagesSuccessState());
+           emit(GalleryGetImagesSuccessState());
+           galleryDataModel = GalleryDataModel.fromJson(value.data);
+          // galleryDataModel = GalleryDataModel.fromJson(value.data);
         }).catchError((error) {
           debugPrint(error.toString());
           emit(GalleryGetImagesErrorState());
         });
       } else {
+        print("VAlue is no");
         Components.showSnackBar(
           title: 'Gallery',
           message: 'No Internet Connection',
